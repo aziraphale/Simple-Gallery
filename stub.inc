@@ -1,6 +1,6 @@
 <?php
 
-define('GALLERY_URL', 'http://sek.sihnon.net/pub/gallery/gallery.inc');
+define('GALLERY_URL', 'https://raw.github.com/aziraphale/Simple-Gallery/master/gallery.inc');
 define('CACHED_SCRIPT_TIMEOUT', 3600);
 define('USE_DATA_URIS', true);
 

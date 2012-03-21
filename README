@@ -1,0 +1,26 @@
+Simple Image Gallery
+=======================================
+
+This is a simple PHP image gallery script that is intended to act much like a drop-in replacement for Apache's mod_autoindex module - i.e. it simply shows a list of all of the images in a given directory (ignoring subdirectories).
+
+
+Setup
+-------------------
+This script was designed to be used in three parts:
+ * gallery.inc contains the main code and a default configuration and shouldn't need to be edited at all. It can be hosted on a central server somewhere.
+ * stub.inc overrides the default configuration and downloads gallery.inc into a temporary file where it is cached for a period of time. This allowed me to have one copy of the code (gallery.inc) on one server, which was then run on several different servers without having to manually copy any changes to multiple machines. It *MIGHT* be possible to load gallery.inc directly from GitHub (i.e. https://raw.github.com/aziraphale/Simple-Gallery/master/gallery.inc), but I do not endorse this option and I'm not aware if it would even be allowed.
+ * Individual directory index scripts. You will need to place an "index.php" file in each of the directories in which you wish this script to run. This can be done either by copying stub.inc into index.php in every directory, or (and this is the recommended option) a symlink to stub.inc can be placed in each directory.
+
+
+Features
+-------------------
+ * Mobile browser support.
+ * Auto-generation and caching (in /tmp, usually) of thumbnails.
+ * Display of images' EXIF data.
+ * Extraction of geotagging information from EXIF data, and geocoding the coordinates to a human-readable address.
+ * Support for video files (including generation of thumbnails using the ffmpeg extension).
+ 
+ 
+Notes
+-------------------
+ * The ffmpeg PHP extension is required if any video files are present in the directory to be indexed; the script will error if ffmpeg is unavailable.
