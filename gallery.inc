@@ -241,17 +241,17 @@ class ExifData {
         if (!$data)
             throw new NoExifDataException("Unable to find EXIF data for '$filename'");
         
-        $this->model = $data['Model'];
-        $this->make = $data['Make'];
-        $this->orientation = $data['Orientation'];
+        $this->model = @$data['Model'];
+        $this->make = @$data['Make'];
+        $this->orientation = @$data['Orientation'];
         $this->datetime = !empty($data['DateTimeOriginal']) ? strtotime($data['DateTimeOriginal']) : strtotime($data['DateTime']);
-        $this->exposure = $data['ExposureTime'];
-        $this->fNumber = $data['FNumber'];
-        $this->isoSpeed = $data['ISOSpeedRatings'];
-        $this->shutterSpeed = $data['ShutterSpeedValue'];
-        $this->aperture = $data['ApertureValue'];
-        $this->flash = $data['Flash'];
-        $this->focalLength = $data['FocalLength'];
+        $this->exposure = @$data['ExposureTime'];
+        $this->fNumber = @$data['FNumber'];
+        $this->isoSpeed = @$data['ISOSpeedRatings'];
+        $this->shutterSpeed = @$data['ShutterSpeedValue'];
+        $this->aperture = @$data['ApertureValue'];
+        $this->flash = @$data['Flash'];
+        $this->focalLength = @$data['FocalLength'];
         
         if (isset($data['GPSLatitudeRef'], $data['GPSLatitude'], $data['GPSLongitudeRef'], $data['GPSLongitude'])) {
             $this->coordinates = Coordinates::fromExifArrays($data['GPSLatitudeRef'], $data['GPSLatitude'], $data['GPSLongitudeRef'], $data['GPSLongitude']);
@@ -738,7 +738,7 @@ class Gallery {
             if ($ff == __FILE__) continue;
             
             $fInfo = pathinfo($ff);
-            if (in_array($fInfo['extension'], array('avi','mkv'))) {
+            if (isset($fInfo['extension']) && in_array($fInfo['extension'], array('avi','mkv'))) {
                 //Video
                 $out[] = new VideoInfo($ff);
             } else {
@@ -764,7 +764,7 @@ if (!function_exists('imagecreatefromjpeg')) {
 }
 
 $startTime = microtime(true);
-ob_start('ob_gzhandler', 1024);
+@ob_start('ob_gzhandler', 1024);
 
 $files = glob('*');
 
